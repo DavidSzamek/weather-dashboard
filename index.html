@@ -28,7 +28,7 @@
                 <h3 class="mt-2">Search for a City:</h3>
                 <!-- User input area -->
                     <div class="form-group mb-2">
-                        <input class="form-control userInput" type="text" placeholder="Enter a city">  
+                        <input id="cityInput" class="form-control" type="text" placeholder="Enter a city">  
                             <div class="d-grid gap-2">
                                 <button class="btn btn-primary mt-2 searchButton" type="button">Search</button>
                                     <button class="btn btn-primary clearButton" type="button">Clear History</button>
@@ -46,13 +46,13 @@
             <!-- Today's weather card -->
             <div class="col-md-10">
                 <div class="row mr-0">
-                    <div id="weather-today" class="col-lg-11 card m-2 d-none">
+                    <div id="weather-today" class="col-lg-10 card m-2">
                         <div class="card-body">
                             <h2 id="city-name" class="city-name align-middle"></h2>
-                                <p id="temperature"></p>
-                                <p id="wind"></p>
-                                <p id="humidty"></p>
-                                <p id="UV Index"></p>
+                                <div class="col-10">
+                                    <h2 id="userSearch"></h2>
+                                        <div id="current-weather-container" class="list-group"></div>
+                                </div>
                         </div>
                     </div> 
                 </div>

@@ -118,31 +118,59 @@ function getWeather(event) {
             else {
                 bgcolor = "red";
             }
-            // uv
+            // add uv to card
             var uvShow = $("<p>").attr("class", "card-text").text("UV Index: ");
             uvShow.append($("<span>").attr("class", "uvIndex").attr("style", ("background-color:" + bgcolor)).text(uvIndex));
             cardBody.append(uvShow);
             // console.log(uvIndex);
-
-            var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInputEl.val() + "&appid=" + apiKey;
-        
-            forecastUrl = "https://cors-anywhere.herokuapp.com/" + forecastUrl;
-
-            console.log(forecastUrl);
-            
-            fetch(forecastUrl)
-
-            .then(function (forecastData) {
-                console.log(forecastData);
-                return forecastData.json();
-
-                
-            })
-
-
         });
 
+     // fetch 5 day future forecast 
+
+     var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInputEl.val() + "&units=metric&appid=" + apiKey;
         
+     forecastUrl = "https://cors-anywhere.herokuapp.com/" + forecastUrl;
+
+     // console.log(forecastUrl);
+     
+     fetch(forecastUrl)
+
+     .then(function (response) {
+         // console.log(response);
+         return response.json();
+     })
+     .then (function (forecastData) {
+         console.log(forecastData)
+         return forecastData
+     })
+
+     .then ( function (forecastData) {
+         var futureForecast = $("<div>").attr("class", "forecast");
+         $("#weather-today").append(futureForecast); 
+
+         for (var i = 0; i < forecastData.list.length; i++) {
+             if (forecastData.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                 var forecastDay = $("<div>").attr("class", "one-fifth card text-white bg-success");
+                 futureForecast.append(forecastDay);
+
+                 var forecastCard = $("<div>").attr("class");
+                 forecastDay.append(forecastCard);
+                 
+                 var forecastHead = $("<div>").attr("class", "card-header").text(moment(forecastData.list[i].dt, "X").format("ddd, MMM Do"));
+                 forecastDay.append(forecastHead);
+
+                 var forecastImg = $("<img>").attr("class", "card-img-top").attr("src", "https://openweathermap.org/img/wn/" + forecastData.list[i].weather[0].icon + "@2x.png");
+                 forecastDay.append(forecastImg);
+
+                 var forecastBody = $("<div>").attr("class", "card-body");
+                 forecastDay.append(forecastBody);
+
+                 forecastBody.append($("<p>").attr("class", "card-text").html("Temp: " + forecastData.list[i].main.temp + " °C"));
+                 forecastBody.append($("<p>").attr("class", "card-text").text("Humidity: " + forecastData.list[i].main.humidity + "%"));
+ 
+             }
+         }
+     })
 
     });
 }

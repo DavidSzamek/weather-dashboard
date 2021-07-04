@@ -1,0 +1,13 @@
+
+
+.one-fifth {
+    box-sizing: border-box;
+    width: 20%;
+    margin: 5px;
+}
+
+.forecast {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

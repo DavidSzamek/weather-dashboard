@@ -1,17 +1,26 @@
 $(document).ready(function () {
+    var searchHistory = JSON.parse(localStorage.getItem("city"));
+
+    if (searchHistory !== null) {
+        var lastSearchIndex = searchHistory.length - 1; 
+        var lastSearchCity = searchHistory(lastSearchIndex);
+        getWeather(lastSearchCity);
+        console.log('Last searched city: ${lastSearchCity}');
+    }
 
 })
 
 // Global variables
 
+var searchHistoryList = [];
+
 // Search button 
 var searchButton = $(".searchButton");
-console.log(searchButton)
+// console.log(searchButton)
 
 
 // Storing user input value 
 var cityInputEl = $("#cityInput");
-
 
 // API Key & URL 
 var apiKey = "67db64e8f2042018691a996ccaac0a12";
@@ -21,27 +30,26 @@ var apiUrl
 // Fetch open weather api 
 
 function getWeather(event) {   
-    event.preventDefault();
+    // event.preventDefault();
 
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInputEl.val() + "&units=metric&appid=" + apiKey;
 
-    console.log("working?");
+    // console.log("test?");
 
     fetch(apiUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
-        console.log(data.name);
-        console.log(data.main.temp);
-        console.log(data.weather[0].icon);
-        console.log(data.main.humidity);
+        // console.log(data);
+        // console.log(data.name);
+        // console.log(data.main.temp);
+        // console.log(data.weather[0].icon);
+        // console.log(data.main.humidity);
 
         // for uv 
-        console.log(data.coord.lat)
-        console.log(data.coord.lon)
-
+        // console.log(data.coord.lat)
+        // console.log(data.coord.lon)
 
         // displayWeather(data, city);
 
@@ -49,6 +57,9 @@ function getWeather(event) {
     })
 
     .then(function displayWeather(data) {
+
+        // empty previous search container
+        $("#weather-today").empty();
 
         // create the current card
         var currentCard = $("<div>").attr("class", "card");
@@ -88,7 +99,7 @@ function getWeather(event) {
        
         
 
-        var uvUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + data.coord.lat + "&lon=" + data.coord.lat + "&appid=" + apiKey;
+        var uvUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=" + apiKey;
 
         fetch(uvUrl)
         .then(function (response) {
@@ -96,7 +107,7 @@ function getWeather(event) {
         })
         .then (function (uvResponse) {
 
-            console.log(uvResponse);
+            // console.log(uvResponse);
 
             return uvResponse;
 
@@ -104,7 +115,7 @@ function getWeather(event) {
         
         .then(function displayUV(uvResponse) {
 
-            var uvIndex = uvResponse.value
+            var uvIndex = uvResponse.current.uvi;
             var bgcolor; 
             if (uvIndex <= 3) {
                 bgcolor = "green";
@@ -132,6 +143,10 @@ function getWeather(event) {
      forecastUrl = "https://cors-anywhere.herokuapp.com/" + forecastUrl;
 
      // console.log(forecastUrl);
+
+     // empties forecast container
+     $(".forecast").empty();
+
      
      fetch(forecastUrl)
 
@@ -140,7 +155,7 @@ function getWeather(event) {
          return response.json();
      })
      .then (function (forecastData) {
-         console.log(forecastData)
+         // console.log(forecastData)
          return forecastData
      })
 
@@ -179,5 +194,37 @@ function getWeather(event) {
 //     $("weather-today").empty();
 // }
 
-searchButton.click(getWeather);
+// searchButton.click(getWeather);
+
+// search button saves to localStorage
+
+$(".searchButton").on("click", function(event) {
+    event.preventDefault(); 
+
+    var city = $("#cityInput").val().trim(); 
+    getWeather(event); 
+    if (!searchHistoryList.includes(city)) {
+        searchHistoryList.push(city); 
+        var searchedCities = $("<li class='list-group-item'>" + city + "</li>");
+        $(".history").append(searchedCities);
+    };
+    localStorage.setItem("city", JSON.stringify(searchHistoryList));
+    console.log(searchHistoryList);
+});
+
+// create clickable list items to retrieve previous search history 
+
+$(document).on("click", ".list-group-item", function() {
+    var cityList = $(this).text(); 
+    getWeather(cityList);
+})
+
+$(".clearButton").on("click", (event) => {
+    localStorage.clear();
+    
+});
+// 
+
+
+
 

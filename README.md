@@ -1,10 +1,20 @@
-# 06 Server-Side APIs: Weather Dashboard
+# The Weather Dashboard
 
-## Your Task
+## The Task
 
-Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
+The aim of this project was to create a weather dashboard that will run in the browser and feature dynamically updating HTML and CSS. 
 
-Use the [OpenWeather One Call API](https://openweathermap.org/api/one-call-api) to retrieve weather data for cities. Read through the documentation for setup and usage instructions. You will use `localStorage` to store any persistent data. For more information on how to work with the OpenWeather API, refer to the [Full-Stack Blog on how to use API keys](https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys).
+These website was created using the CSS framework bootstrap and powered using JavaScript, jQuery, moment.js & third-party APIs.
+
+Third-party APIs allow developers to access data and functionality by making requests with specific parameters to a URL. Developers are often tasked with retrieving data from another application's API and using it in the context of their own. 
+
+Using the [OpenWeather API] I was able to fetch weather data related to the users search input, the current forecast, temperature, wind speed and uv rating. 
+
+Furthermore, using the [OpenWeather One Call API](https://openweathermap.org/api/one-call-api) I was able to fetch the 5 day forecast. 
+
+## Difficulties 
+
+This project brought together several concepts pertinent to third-party APIs. I struggled to maintain the best practice indentation with multiple functions running simultaneously. Furthermore, I was able to save the user search to a list group and localStorage; however, was unable to generate them on the page load or make previous user searches interactable. 
 
 ## User Story
 
@@ -34,7 +44,7 @@ THEN I am again presented with current and future conditions for that city
 
 The following image shows the web application's appearance and functionality:
 
-![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for Atlanta.](./Assets/06-server-side-apis-homework-demo.png)
+![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](./assets/images/function.png)
 
 ## Grading Requirements
 
@@ -78,13 +88,11 @@ This homework is graded based on the following criteria:
 
 * Repository contains quality readme file with description, screenshot, and link to deployed application.
 
-## Review
+## The Deployed Website 
 
-You are required to submit BOTH of the following for review:
+The application can be accessed using the following link: 
 
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a readme describing the project.
+[Live website:](https://davidszamek.github.io/weather-dashboard/ "Weather Dashboard")
 
 - - -
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
